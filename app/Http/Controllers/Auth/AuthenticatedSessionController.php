@@ -35,6 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         $token = JWTAuth::fromUser(Auth::user());
         session(['jwt_token' => $token]);
+        session(['user_level' => Auth::user()['level']]);
 
         return redirect()->intended(route('dashboard', absolute: false));
     }

@@ -1,4 +1,4 @@
-export default function ProductTable({ products }) {
+export default function ProductTable({ products, userLevel }) {
     return (
         <div className="w-full overflow-x-auto rounded-lg shadow">
             <table className="min-w-[1000px] text-sm text-left text-gray-700">
@@ -11,7 +11,7 @@ export default function ProductTable({ products }) {
                         <th className="px-4 py-3">SKU</th>
                         <th className="px-4 py-3">Quantidade</th>
                         <th className="px-4 py-3">Preço</th>
-                        <th className="px-4 py-3">Opções</th>
+                        {userLevel !== "user" && <th className="px-4 py-3">Opções</th>}
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -25,7 +25,7 @@ export default function ProductTable({ products }) {
                                 <td className="px-4 py-2">{product.sku}</td>
                                 <td className="px-4 py-2">{product.quantity}</td>
                                 <td className="px-4 py-2">R$ {parseFloat(product.price).toFixed(2)}</td>
-                                <td className="px-4 py-2"><button>aaa</button></td>
+                                {userLevel !== "user" && <td className="px-4 py-2"><button>botao</button></td>}
                             </tr>
                         ))
                     ) : (

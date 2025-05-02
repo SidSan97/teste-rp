@@ -12,7 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard({ jwtToken }) {
+export default function Dashboard({ jwtToken, userLevel }) {
     const [products, setProducts] = useState([]);
     const { props } = usePage();
 
@@ -59,7 +59,7 @@ export default function Dashboard({ jwtToken }) {
 
             <div className="max-w-6xl mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-4">Lista de Produtos</h1>
-                <ProductTable products={products} />
+                <ProductTable products={products} userLevel={userLevel} />
             </div>
         </AppLayout>
     );

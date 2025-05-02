@@ -13,6 +13,7 @@ class ProductsController extends Controller
     {
         return Inertia::render('dashboard', [
             'jwtToken' => session('jwt_token'),
+            'userLevel' => session('user_level'),
         ]);
     }
 
