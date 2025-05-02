@@ -12,31 +12,44 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard({ jwtToken, userLevel }) {
+interface DashboardProps {
+    jwtToken: string;
+    userLevel: string;
+}
+
+export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
     const [products, setProducts] = useState([]);
+    const [showFlash, setShowFlash] = useState(true);
+
     const { props } = usePage();
 
-    if (props.flash?.success) {
+    if (props.flash?.success && showFlash) {
         Swal.fire({
             icon: 'success',
             title: 'Sucesso!',
             text: props.flash.success,
-            timer: 3000,
-            showConfirmButton: false,
+            showConfirmButton: true,
+            willClose: () => {
+                setShowFlash(false);
+                fetchProducts();
+            }
         });
     }
 
-    if (props.flash?.error) {
+    if (props.flash?.error && showFlash) {
         Swal.fire({
             icon: 'error',
             title: 'Erro',
             text: props.flash.error,
-            timer: 3000,
-            showConfirmButton: false,
+            showConfirmButton: true,
+            willClose: () => {
+                setShowFlash(false);
+                location.reload();
+            }
         });
     }
 
-    useEffect(() => {
+    const fetchProducts = () => {
         fetch('http://localhost:8000/api/v1/produtos', {
             method: 'GET',
             headers: {
@@ -51,6 +64,10 @@ export default function Dashboard({ jwtToken, userLevel }) {
         .catch(error => {
             console.error('API error:', error);
         });
+    }
+
+    useEffect(() => {
+        fetchProducts();
     }, []);
 
     return (
