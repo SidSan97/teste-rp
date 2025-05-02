@@ -10,6 +10,12 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [ProductsController::class, 'index'])->name('dashboard');
+
+    Route::get('/criar-produtos', function () {
+        return Inertia::render('create-products');
+    })->name('create-products');
+
+    Route::post('/criar-produtos', [ProductsController::class, 'store'])->name('dashboard-store');
 });
 
 require __DIR__.'/settings.php';

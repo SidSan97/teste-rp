@@ -14,7 +14,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Cadastrar Produto',
-        href: '/create-product',
+        href: '/criar-produtos',
         icon: CirclePlus
     }
 ];
