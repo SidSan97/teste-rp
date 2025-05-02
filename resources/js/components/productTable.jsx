@@ -1,5 +1,39 @@
+import { router, usePage } from '@inertiajs/react';
+import Swal from 'sweetalert2';
+import { Dialog } from '@headlessui/react';
+import { useState } from 'react';
+import EditProductModal from './edit-product-modal';
+
 export default function ProductTable({ products, userLevel }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Deseja mesmo excluir o produto?",
+            showDenyButton: true,
+            confirmButtonText: "Sim",
+            denyButtonText: `Não`
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(`/excluir-produto/${id}`);
+            }
+        });
+    };
+
+    const openModal = (product) => {
+        setSelectedProduct(product);
+        setIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsOpen(false);
+        setSelectedProduct(null);
+    };
+
     return (
+        <>
         <div className="w-full overflow-x-auto rounded-lg shadow">
             <table className="min-w-[1000px] text-sm text-left text-gray-700">
                 <thead className="bg-gray-100 text-xs uppercase tracking-wider text-gray-700">
@@ -25,7 +59,19 @@ export default function ProductTable({ products, userLevel }) {
                                 <td className="px-4 py-2">{product.sku}</td>
                                 <td className="px-4 py-2">{product.quantity}</td>
                                 <td className="px-4 py-2">R$ {parseFloat(product.price).toFixed(2)}</td>
-                                {userLevel !== "user" && <td className="px-4 py-2"><button>botao</button></td>}
+                                <td className="px-4 py-2">
+                                    {userLevel === 'admin' && (
+                                        <>
+                                            <button onClick={() => openModal(product)} className="text-blue-600 hover:underline mr-2">Editar</button>
+                                            <button onClick={() => handleDelete(product.id_products)} className="text-red-600 hover:underline">Excluir</button>
+                                        </>
+                                    )}
+
+                                    {userLevel === 'operator' && (
+                                        <button className="text-green-600 hover:underline">Atualizar Estoque</button>
+                                    )}
+                                </td>
+
                             </tr>
                         ))
                     ) : (
@@ -36,5 +82,13 @@ export default function ProductTable({ products, userLevel }) {
                 </tbody>
             </table>
         </div>
+
+        {isOpen && selectedProduct && (
+            <EditProductModal
+                product={selectedProduct}
+                onClose={closeModal}
+            />
+        )}
+        </>
     );
 }
