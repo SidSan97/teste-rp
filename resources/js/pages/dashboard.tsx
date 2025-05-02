@@ -1,9 +1,9 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import ProductTable from '@/components/productTable';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,6 +14,27 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Dashboard({ jwtToken }) {
     const [products, setProducts] = useState([]);
+    const { props } = usePage();
+
+    if (props.flash?.success) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: props.flash.success,
+            timer: 3000,
+            showConfirmButton: false,
+        });
+    }
+
+    if (props.flash?.error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            text: props.flash.error,
+            timer: 3000,
+            showConfirmButton: false,
+        });
+    }
 
     useEffect(() => {
         fetch('http://localhost:8000/api/v1/produtos', {

@@ -1,9 +1,10 @@
 export default function ProductTable({ products }) {
     return (
-        <div className="overflow-x-auto rounded-lg shadow">
-            <table className="min-w-full text-sm text-left text-gray-700">
+        <div className="w-full overflow-x-auto rounded-lg shadow">
+            <table className="min-w-[1000px] text-sm text-left text-gray-700">
                 <thead className="bg-gray-100 text-xs uppercase tracking-wider text-gray-700">
                     <tr>
+                        <th className="px-4 py-3"></th>
                         <th className="px-4 py-3">Nome</th>
                         <th className="px-4 py-3">Descrição</th>
                         <th className="px-4 py-3">Categoria</th>
@@ -15,8 +16,9 @@ export default function ProductTable({ products }) {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                     {products?.length > 0 ? (
-                        products.map((product) => (
+                        products.map((product, index) => (
                             <tr key={product.id_products}>
+                                <td className="px-4 py-2">{index + 1}</td>
                                 <td className="px-4 py-2">{product.name}</td>
                                 <td className="px-4 py-2">{product.description}</td>
                                 <td className="px-4 py-2">{product.category}</td>
