@@ -15,7 +15,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('create-products');
     })->name('create-products');
 
-    Route::post('/criar-produtos', [ProductsController::class, 'store'])->name('dashboard-store');
+    Route::post('/criar-produtos', [ProductsController::class, 'store'])->name('dashboard.store');
+    Route::delete('/excluir-produto/{id}', [ProductsController::class, 'destroy'])->name('delete.product');
+    Route::put('/editar-produto/{id}', [ProductsController::class, 'update'])->name('update.product');
+
 });
 
 require __DIR__.'/settings.php';
