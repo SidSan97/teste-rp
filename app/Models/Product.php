@@ -10,6 +10,7 @@ class Product extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'id_products';
     protected $fillable = [
         'name',
         'description',
