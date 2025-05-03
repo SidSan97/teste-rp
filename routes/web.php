@@ -18,6 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/criar-produtos', [ProductsController::class, 'store'])->name('dashboard.store')->middleware('user_level');
     Route::delete('/excluir-produto/{id}', [ProductsController::class, 'destroy'])->name('delete.product')->middleware('user_level');
+    Route::put('/editar-produto/{id}', [ProductsController::class, 'update'])->name('update.product');
 
 });
 
