@@ -11,11 +11,13 @@ const mainNavItems: NavItem[] = [
         title: 'Home',
         href: '/dashboard',
         icon: House,
+        adminRoute: false,
     },
     {
         title: 'Cadastrar Produto',
         href: '/criar-produtos',
-        icon: CirclePlus
+        icon: CirclePlus,
+        adminRoute: true,
     }
 ];
 
