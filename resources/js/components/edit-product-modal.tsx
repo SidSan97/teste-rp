@@ -1,8 +1,7 @@
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
 
-export default function EditProductModal({ product, onClose }) {
+export default function EditProductModal({ product, onClose, userLevel }) {
     const [form, setForm] = useState({
         id: '',
         name: '',
@@ -35,7 +34,7 @@ export default function EditProductModal({ product, onClose }) {
     };
 
     const handleSubmit = () => {
-        Inertia.put(`/editar-produto/${form.id}`, form, {});
+       router.put(`/editar-produto/${form.id}`, form, {});
     };
 
     return (
@@ -47,12 +46,15 @@ export default function EditProductModal({ product, onClose }) {
                         <div key={field}>
                             <label className="block text-sm font-medium mb-1 capitalize">{labels[index]}</label>
                             <input
+                                readOnly={userLevel === 'operator' && field !== 'quantity'}
                                 type={field === 'price' || field === 'quantity' ? 'number' : 'text'}
                                 step={field === 'price' || field === 'quantity' ? '01' : undefined}
                                 name={field}
                                 value={form[field]}
                                 onChange={handleChange}
-                                className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className={`w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                                    userLevel == 'operator' && field !== 'quantity' ? 'bg-gray-300' : ''
+                                }`}
                             />
                         </div>
                     ))}

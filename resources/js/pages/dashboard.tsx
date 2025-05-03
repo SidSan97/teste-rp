@@ -1,7 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, usePage } from '@inertiajs/react';
-import ProductTable from '@/components/productTable';
+import { Head, router, usePage } from '@inertiajs/react';
+import ProductTable from '@/components/product-table';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -44,7 +44,7 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
             showConfirmButton: true,
             willClose: () => {
                 setShowFlash(false);
-                location.reload();
+                fetchProducts();
             }
         });
     }
@@ -76,6 +76,9 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
 
             <div className="max-w-6xl mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-4">Lista de Produtos</h1>
+
+
+
                 <ProductTable products={products} userLevel={userLevel} />
             </div>
         </AppLayout>

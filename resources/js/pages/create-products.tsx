@@ -1,8 +1,11 @@
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
-import { useForm } from '@inertiajs/react';
-import { Head } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { StyledInput, StyledTextarea } from '@/components/ui/styled-input';
+import { Inertia } from '@inertiajs/inertia';
+import Swal from 'sweetalert2';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -12,7 +15,11 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function CreateProduct() {
-    const { data, setData, post, processing, errors, reset } = useForm({
+
+    const { props } = usePage();
+    const [showFlash, setShowFlash] = useState(true);
+
+    const { data, setData, processing, errors } = useForm({
         name: '',
         description: '',
         quantity: '',
@@ -21,10 +28,30 @@ export default function CreateProduct() {
         sku: '',
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        post('/criar-produtos');
+    const handleSubmit = () => {
+        router.post('/criar-produtos', data);
     };
+
+    if (props.flash?.success && showFlash) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: props.flash.success,
+            showConfirmButton: true,
+            willClose: () => {
+                setShowFlash(false);
+            }
+        });
+    }
+
+    if (props.flash?.error&& showFlash) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            text: props.flash.error,
+            showConfirmButton: true,
+        });
+    }
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>

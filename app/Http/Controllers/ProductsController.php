@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Response;
 
 class ProductsController extends Controller
@@ -28,64 +29,51 @@ class ProductsController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'quantity' => 'required|integer',
-            'price' => 'required|numeric',
-            'category' => 'required|string|max:255',
-            'sku' => 'required|string|max:255',
-        ]);
-
         try {
-            $product = Product::create($validated);
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'quantity' => 'required|integer',
+                'price' => 'required|numeric',
+                'category' => 'required|string|max:255',
+                'sku' => 'required|string|max:255',
+            ]);
 
-            if (!$product) {
-                return redirect()
-                    ->route('dashboard')
-                    ->with('error', 'Erro ao cadastrar o produto.')
-                    ->setStatusCode(500);
-            }
+            $this->product->create($validated);
 
-            return redirect()
-                ->route('dashboard')
-                ->with('success', 'Produto cadastrado com sucesso!')
-                ->setStatusCode(201);
+            return redirect()->route('create.products')->with('success', 'Produto cadastrado com sucesso.');
 
         } catch (\Exception $e) {
+            Log::info("ProductsController error: ", [$e]);
+
             return redirect()
-                ->route('dashboard')
-                ->with('error', 'Erro interno ao cadastrar o produto: ' . $e->getMessage())
-                ->setStatusCode(500);
+                ->route('create.products')
+                ->with('error', 'Erro interno ao cadastrar o produto. Tente novamente mais tarde.');
         }
     }
 
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
+        try {
+            $request->validate([
+                'name' => 'required',
+                'description' => 'required',
+                'quantity' => 'required|integer',
+                'price' => 'required|numeric',
+                'category' => 'required',
+                'sku' => 'required',
+            ]);
 
-        if(!$product) {
-            return redirect()
-                ->route('dashboard')
-                ->with('error', 'Produto não encontrado')
-                ->setStatusCode(404);
+            $product = $this->product->findOrFail($id);
+
+            $product->update($request->all());
+
+            return redirect()->route('dashboard')->with('success', 'Produto atualizado com sucesso!');
+
+        } catch(\Exception $e) {
+            Log::info("ProductsController error: ", [$e]);
+            return redirect()->route('dashboard')->with('error', 'Erro ao editar o produto. Tente novamente mais tarde.');
         }
-
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'quantity' => 'required|integer',
-            'price' => 'required|numeric',
-            'category' => 'required',
-            'sku' => 'required',
-        ]);
-
-        $product->update($request->all());
-
-        return redirect()
-            ->route('dashboard')
-            ->with('success', 'Produto atualizado com sucesso!')
-            ->setStatusCode(200);
     }
 
     public function destroy(int $id)
@@ -96,7 +84,8 @@ class ProductsController extends Controller
 
             return redirect()->route('dashboard')->with('success', 'Produto excluído com sucesso.');
         } catch (\Exception $e) {
-            return redirect()->route('dashboard')->with('error', 'Erro ao excluir o produto.');
+            Log::info("ProductsController error: ", [$e]);
+            return redirect()->route('dashboard')->with('error', 'Erro ao excluir o produto. Tente novamente mais tarde.');
         }
     }
 }
