@@ -12,7 +12,7 @@ export default function ProductTable({ products, userLevel }: any) {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
 
-    const filteredProducts = products.filter((product: { name: string; category: string; price: string; }) => {
+    const filteredProducts = (products || []).filter((product: { name: string; category: string; price: string; }) => {
         const matchName = product.name.toLowerCase().includes(searchName.toLowerCase());
         const matchCategory = product.category.toLowerCase().includes(searchCategory.toLowerCase());
         const matchMin = minPrice === '' || parseFloat(product.price) >= parseFloat(minPrice);
