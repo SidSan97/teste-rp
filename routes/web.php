@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,11 +14,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/criar-produtos', function () {
         return Inertia::render('create-products');
-    })->name('create-products');
+    })->name('create.products')->middleware('user_level');
 
-    Route::post('/criar-produtos', [ProductsController::class, 'store'])->name('dashboard.store');
-    Route::delete('/excluir-produto/{id}', [ProductsController::class, 'destroy'])->name('delete.product');
-    Route::put('/editar-produto/{id}', [ProductsController::class, 'update'])->name('update.product');
+    Route::post('/criar-produtos', [ProductsController::class, 'store'])->name('dashboard.store')->middleware('user_level');
+    Route::delete('/excluir-produto/{id}', [ProductsController::class, 'destroy'])->name('delete.product')->middleware('user_level');
 
 });
 
