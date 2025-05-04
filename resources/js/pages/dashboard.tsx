@@ -17,37 +17,17 @@ interface DashboardProps {
     userLevel: string;
 }
 
+interface FlashProps {
+    success?: string;
+    error?: string;
+}
+
 export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
     const [products, setProducts] = useState([]);
     const [showFlash, setShowFlash] = useState(true);
 
-    const { props } = usePage();
-
-    if (props.flash?.success && showFlash) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Sucesso!',
-            text: props.flash.success,
-            showConfirmButton: true,
-            willClose: () => {
-                setShowFlash(false);
-                fetchProducts();
-            }
-        });
-    }
-
-    if (props.flash?.error && showFlash) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Erro',
-            text: props.flash.error,
-            showConfirmButton: true,
-            willClose: () => {
-                setShowFlash(false);
-                fetchProducts();
-            }
-        });
-    }
+    const { props } = usePage<{ flash: FlashProps }>();
+    console.log(props)
 
     const fetchProducts = () => {
         fetch('http://localhost:8000/api/v1/produtos', {
@@ -66,6 +46,35 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
         });
     }
 
+
+    if (props.flash?.success && showFlash) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: props.flash.success,
+            showConfirmButton: true,
+            willClose: () => {
+                setShowFlash(false);
+                //fetchProducts();
+                location.reload()
+            }
+        });
+    }
+
+    if (props.flash?.error && showFlash) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: props.flash.error,
+            showConfirmButton: true,
+            willClose: () => {
+                setShowFlash(false);
+                //fetchProducts();
+                location.reload()
+            }
+        });
+    }
+
     useEffect(() => {
         fetchProducts();
     }, []);
@@ -76,8 +85,6 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
 
             <div className="max-w-6xl mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-4">Lista de Produtos</h1>
-
-
 
                 <ProductTable products={products} userLevel={userLevel} />
             </div>

@@ -26,8 +26,12 @@ class ProductsController extends Controller
             'userLevel' => session('user_level'),
         ]);
     }
+    public function create()
+    {
+        return Inertia::render('create-products');
+    }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         try {
             $validated = $request->validate([
@@ -68,7 +72,7 @@ class ProductsController extends Controller
 
             $product->update($request->all());
 
-            return redirect()->route('dashboard')->with('success', 'Produto atualizado com sucesso!');
+            return back()->with('success', 'Produto atualizado com sucesso!');
 
         } catch(\Exception $e) {
             Log::info("ProductsController error: ", [$e]);

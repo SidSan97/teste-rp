@@ -33,7 +33,8 @@ export default function EditProductModal({ product, onClose, userLevel }) {
         setForm({ ...form, [name]: value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
        router.put(`/editar-produto/${form.id}`, form, {});
     };
 

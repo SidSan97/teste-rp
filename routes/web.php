@@ -12,11 +12,8 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [ProductsController::class, 'index'])->name('dashboard');
 
-    Route::get('/criar-produtos', function () {
-        return Inertia::render('create-products');
-    })->name('create.products')->middleware('user_level');
-
-    Route::post('/criar-produtos', [ProductsController::class, 'store'])->name('dashboard.store')->middleware('user_level');
+    Route::get('/criar-produtos', [ProductsController::class, 'create'])->name('create.products')->middleware('user_level');
+    Route::post('/criar-produtos', [ProductsController::class, 'store'])->name('store.products')->middleware('user_level');
     Route::delete('/excluir-produto/{id}', [ProductsController::class, 'destroy'])->name('delete.product')->middleware('user_level');
     Route::put('/editar-produto/{id}', [ProductsController::class, 'update'])->name('update.product');
 
