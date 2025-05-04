@@ -55,7 +55,6 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
             showConfirmButton: true,
             willClose: () => {
                 setShowFlash(false);
-                //fetchProducts();
                 location.reload()
             }
         });
@@ -69,7 +68,6 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
             showConfirmButton: true,
             willClose: () => {
                 setShowFlash(false);
-                //fetchProducts();
                 location.reload()
             }
         });
