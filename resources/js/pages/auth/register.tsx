@@ -86,7 +86,7 @@ export default function Register() {
                             <option value="">Selecione o nível</option>
                             <option value="admin">Administrador</option>
                             <option value="operator">Operador</option>
-                            <option value="user">Usuário Comum</option>
+                            <option value="common">Usuário Comum</option>
                         </select>
                         <InputError message={errors.level} className="mt-2" />
                     </div>

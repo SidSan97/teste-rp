@@ -2,6 +2,7 @@ import { router, usePage } from '@inertiajs/react';
 import Swal from 'sweetalert2';
 import { useState } from 'react';
 import EditProductModal from './edit-product-modal';
+import { StyledButton } from './ui/styled-button';
 
 export default function ProductTable({ products, userLevel }: any) {
     const [isOpen, setIsOpen] = useState(false);
@@ -113,7 +114,7 @@ export default function ProductTable({ products, userLevel }: any) {
                             <th className="px-4 py-3">Preço</th>
                             <th className="px-4 py-3">Criado em</th>
                             <th className="px-4 py-3">Atualizado em</th>
-                            {userLevel !== "user" && <th className="px-4 py-3">Opções</th>}
+                            {userLevel !== "common" && <th className="px-4 py-3">Opções</th>}
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
