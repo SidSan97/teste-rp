@@ -25,10 +25,13 @@ interface FlashProps {
 export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
     const [products, setProducts] = useState([]);
     const [showFlash, setShowFlash] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const { props } = usePage<{ flash: FlashProps }>();
 
     const fetchProducts = () => {
+        setLoading(true);
+
         fetch('http://localhost:8000/api/v1/produtos', {
             method: 'GET',
             headers: {
@@ -42,6 +45,15 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
         })
         .catch(error => {
             console.error('API error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: "Não foi possivel carregar lista de produtos",
+                showConfirmButton: true,
+            });
+        })
+        .finally(() => {
+            setLoading(false);
         });
     }
 
@@ -82,7 +94,13 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
             <div className="max-w-6xl mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-4">Lista de Produtos</h1>
 
-                <ProductTable products={products} userLevel={userLevel} />
+                {loading ? (
+                    <div className="flex justify-center items-center h-40">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                    </div>
+                ) : (
+                    <ProductTable products={products} userLevel={userLevel} />
+                )}
             </div>
         </AppLayout>
     );
