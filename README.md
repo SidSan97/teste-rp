@@ -57,3 +57,9 @@
   <dd>login: comum@email.com</dd>
   <dd>senha: teste123</dd>
 </dl>
+
+<h3>Build do projeto</h3>
+
+<ul>
+    <li>npm run build</li>
+</ul>
