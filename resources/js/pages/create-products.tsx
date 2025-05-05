@@ -46,7 +46,6 @@ export default function CreateProduct() {
             showConfirmButton: true,
             willClose: () => {
                 setShowFlash(false);
-                location.reload()
             }
         });
     }
