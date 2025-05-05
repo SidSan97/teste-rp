@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Http\RedirectResponse;
+use App\ResponseTraits;
 use Inertia\Inertia;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Response;
 
-use function Pest\Laravel\json;
-
 class ProductsController extends Controller
 {
     protected $product;
+
+    use ResponseTraits;
 
     public function __construct()
     {
@@ -46,17 +46,13 @@ class ProductsController extends Controller
             ]);
 
             $this->product->create($validated);
-
-            return app()->runningUnitTests()
-                ? response()->json(['message' => 'Produto cadastrado com sucesso.'], 201)
-                : redirect()->route('create.products')->with('success', 'Produto cadastrado com sucesso.');
-
+            
+            return $this->response("Produto cadastrado com sucesso.", 201, false, 'create.products');
+            
         } catch (\Exception $e) {
             Log::info("ProductsController store error: ", [$e]);
 
-            return app()->runningUnitTests()
-                ? response()->json(['message' => 'Erro ao cadastrar o produto. Tente novamente mais tarde.'], 500)
-                : redirect()->route('create.products')->with('error', 'Erro ao cadastrar o produto. Tente novamente mais tarde.');
+            return $this->response("Erro ao cadastrar o produto. Tente novamente mais tarde.", 500, true, 'create.products');
         }
     }
 
@@ -76,16 +72,12 @@ class ProductsController extends Controller
 
             $product->update($request->all());
 
-            return app()->runningUnitTests()
-                ? response()->json(['message' => 'Produto editado com sucesso.'], 200)
-                : redirect()->route('dashboard')->with('success', 'Produto editado com sucesso.');
+            return $this->response("Produto editado com sucesso.", 200, false, 'dashboard');
 
         } catch(\Exception $e) {
             Log::info("ProductsController update error: ", [$e]);
-            
-            return app()->runningUnitTests()
-                ? response()->json(['message' => 'Erro ao editar o produto. Tente novamente mais tarde..'], 500)
-                : redirect()->route('dashboard')->with('error', 'Erro ao editar o produto. Tente novamente mais tarde.');
+
+            return $this->response("Erro ao editar o produto. Tente novamente mais tarde.", 500, true, 'dashboard');
         }
     }
 
@@ -95,16 +87,12 @@ class ProductsController extends Controller
             $product = $this->product->findOrFail($id);
             $product->delete();
 
-            return app()->runningUnitTests()
-                ? response()->json(['message' => 'Produto excluído com sucesso.'], 200)
-                : redirect()->route('dashboard')->with('success', 'Produto excluído com sucesso.');
+            return $this->response("Produto excluído com sucesso.", 200, false, 'dashboard');
 
         } catch (\Exception $e) {
             Log::info("ProductsController destroy error: ", [$e]);
 
-            return app()->runningUnitTests()
-                ? response()->json(['message' => 'Erro ao excluir o produto. Tente novamente mais tarde.'], 500)
-                : redirect()->route('dashboard')->with('error', 'Erro ao excluir o produto. Tente novamente mais tarde.');
+            return $this->response("Erro ao excluir o produto. Tente novamente mais tarde.", 500, true, 'dashboard');
         }
     }
 }
