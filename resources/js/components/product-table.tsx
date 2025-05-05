@@ -150,7 +150,13 @@ export default function ProductTable({ products, userLevel }: any) {
                                         )}
 
                                         {userLevel === 'operator' && (
-                                            <button onClick={() => openModal(product)} className="text-green-600 hover:underline">Atualizar Estoque</button>
+                                            <StyledButton
+                                                onClick={() => openModal(product)}
+                                                className="hover:underline mb-1 bg-green-600 text-gray-50"
+                                                style={{ width: "100px" }}
+                                            >
+                                                Atualizar Estoque
+                                            </StyledButton>
                                         )}
                                     </td>
 
