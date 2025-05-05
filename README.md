@@ -12,6 +12,7 @@
 
 <h3> Instalação: </h3>
 <ul>
+  <li> cd teste-rp </li>
   <li> composer install</li>
   <li> cp .env.example .env </li>
   <li> ATUALIZE O  <i>.env</i> COM SUAS CREDENCIAIS DO BANCO DE DADOS </li>
