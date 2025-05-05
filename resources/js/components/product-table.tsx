@@ -133,8 +133,19 @@ export default function ProductTable({ products, userLevel }: any) {
                                     <td className="px-4 py-2">
                                         {userLevel === 'admin' && (
                                             <>
-                                                <button onClick={() => openModal(product)} className="text-blue-600 hover:underline mr-2">Editar</button>
-                                                <button onClick={() => handleDelete(product.id_products)} className="text-red-600 hover:underline">Excluir</button>
+                                                <StyledButton
+                                                    onClick={() => openModal(product)}
+                                                    className="text-blue-600 hover:underline mb-1 bg-blue-600 text-gray-50"
+                                                >
+                                                    Editar
+                                                </StyledButton>
+
+                                                <StyledButton
+                                                    onClick={() => handleDelete(product.id_products)}
+                                                    className="text-blue-600 hover:underline mb-1 bg-red-600 text-gray-50"
+                                                >
+                                                    Excluir
+                                                </StyledButton>
                                             </>
                                         )}
 
