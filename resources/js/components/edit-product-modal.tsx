@@ -28,14 +28,14 @@ export default function EditProductModal({ product, onClose, userLevel }) {
         }
     }, [product]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault()
-       router.put(`/editar-produto/${form.id}`, form, {});
+       router.put(`/editar-produto`, form, {});
     };
 
     return (
