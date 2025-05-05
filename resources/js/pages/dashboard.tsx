@@ -27,7 +27,6 @@ export default function Dashboard({ jwtToken, userLevel }: DashboardProps) {
     const [showFlash, setShowFlash] = useState(true);
 
     const { props } = usePage<{ flash: FlashProps }>();
-    console.log(props)
 
     const fetchProducts = () => {
         fetch('http://localhost:8000/api/v1/produtos', {
