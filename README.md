@@ -1,5 +1,14 @@
 <H1> Teste Rede Parcerias </H1>
 
+<h3>Sobre o projeto:</h3>
+
+<p>
+    O projeto possui usabilidade e layout simples. Tem um menu lateral com 2 links: Home, e Cadastrar Produtos. 
+    <i>Cadastrar Produtos</i> só é visivel para usuários com cargo <strong>admin</strong>. A coluna de opções é 
+    visível apenas para administradores e colaboradores. O admin pode ver na coluna de opções os botões para 
+    editar e excluir o projeto, enquanto o colaborar tem acesso apenas ao botão para atualizar o estoque. 
+</p>
+
 <h3> Tecnologias: </h3>
 <ul>
   <li> Laravel 12 </li>
@@ -48,3 +57,9 @@
   <dd>login: comum@email.com</dd>
   <dd>senha: teste123</dd>
 </dl>
+
+<h3>Build do projeto</h3>
+
+<ul>
+    <li>npm run build</li>
+</ul>
