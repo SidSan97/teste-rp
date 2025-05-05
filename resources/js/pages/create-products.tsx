@@ -24,8 +24,6 @@ export default function CreateProduct() {
     const { props } = usePage<{ flash: FlashProps }>();
     const [showFlash, setShowFlash] = useState(true);
 
-    console.log(props)
-
     const { data, setData, processing, errors } = useForm({
         name: '',
         description: '',
