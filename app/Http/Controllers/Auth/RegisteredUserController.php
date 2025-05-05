@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RegisteredUserController extends Controller
 {
@@ -45,8 +46,11 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
+ 
         Auth::login($user);
+        $token = JWTAuth::fromUser(Auth::user());
+        session(['jwt_token' => $token]);
+        session(['user_level' => Auth::user()['level']]);
 
         return to_route('dashboard');
     }
