@@ -32,3 +32,18 @@
 <br><br>
 <strong>Ou apenas casos especificos: </strong> <br>
 <i> php artisan test tests/Nome da pasta/Nome do arquivo.php </i>
+
+<h3>Usuários de teste</h3>
+<span>Esses são os seguintes usuários de testes criados pelo seeder:</span>
+
+<dl>
+  <dt>Admin</dt>
+    <dd>login: admin@email.com</dd>
+    <dd>senha: teste123</dd>
+ <dt>Operador</dt>
+  <dd>login: operador@email.com</dd>
+  <dd>senha: teste123</dd>
+ <dt>Usuário Comum</dt>
+  <dd>login: comum@email.com</dd>
+  <dd>senha: teste123</dd>
+</dl>
