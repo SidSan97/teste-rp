@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'user_level' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+            'is_common'  => \App\Http\Middleware\EnsureUserIsCommon::class,
         ]);
 
         $middleware->web(append: [
