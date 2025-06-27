@@ -1,4 +1,4 @@
-<H1> Teste Rede Parcerias </H1>
+<H1> Sistema de estoque </H1>
 
 <h3>Sobre o projeto:</h3>
 
